@@ -378,7 +378,7 @@ export default function Footer() {
     },
     { 
       icon: "📞", 
-      text: "+256 123 456 789" 
+      text: "+256 704 267 770" 
     },
     { 
       icon: "✉️", 

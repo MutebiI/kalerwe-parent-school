@@ -595,7 +595,7 @@ export default function Navbar() {
                 }`}
               >
                 <Link
-                  href="/programs"
+                  href="academics/programs"
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >
@@ -603,7 +603,7 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  href="/curriculum"
+                  href="academics/curriculum"
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >

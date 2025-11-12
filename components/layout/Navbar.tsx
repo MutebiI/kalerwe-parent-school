@@ -273,11 +273,11 @@ export default function Navbar() {
                   Achievements
                 </Link>
                 <Link
-                  href="/students/uneb-results"
+                  href="/students/ple-results"
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >
-                  UNEB Results
+                  PLE Results
                 </Link>
                 <Link
                   href="/students/gallery"
@@ -286,13 +286,14 @@ export default function Navbar() {
                 >
                   Photo Gallery
                 </Link>
-                <Link
-  href="/students"
-  className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
->
-  Student Life
-</Link>
-               
+                 <Link
+                  href="/students"
+                  className="block text-center py-1 underline"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Students Life
+                </Link>
+                               
               </div>
             </div>
             {/* Students Dropdown */}

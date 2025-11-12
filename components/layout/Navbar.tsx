@@ -293,7 +293,7 @@
 //                 >
 //                   Students Life
 //                 </Link>
-                               
+                     
 //               </div>
 //             </div>
 //             {/* Students Dropdown */}
@@ -378,7 +378,6 @@ export default function Navbar() {
           {/* School Logo & Name - Left Side */}
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12  rounded-full flex items-center justify-center shadow-md">
-              {/* <span className="text-white font-bold text-lg">SL</span> */}
               <img src="/schoollogo.png" />
             </div>
             <Link href="/" className="flex flex-col">
@@ -517,14 +516,13 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button - ONLY THIS PART CHANGED */}
+          {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-700 p-2 rounded-lg border border-gray-400 hover:bg-gray-100 transition"
             >
               {isOpen ? (
-                // X icon when menu is open, now red
                 <svg
                   className="w-6 h-6 text-red-600"
                   fill="none"
@@ -539,7 +537,6 @@ export default function Navbar() {
                   />
                 </svg>
               ) : (
-                // Hamburger icon when menu is closed
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -580,7 +577,8 @@ export default function Navbar() {
             >
               About
             </Link>
-            {/* Academics Dropdown */}
+            
+            {/* Academics Dropdown - FIXED: Copied exact pattern from Students */}
             <div className="w-full border border-white rounded">
               <button
                 onClick={() => toggleDropdown("academics")}
@@ -596,15 +594,14 @@ export default function Navbar() {
                 }`}
               >
                 <Link
-                  href="/academics/programs"  {/* FIXED: Added /academics/ prefix */}
+                  href="/academics/programs"
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >
                   Programs
                 </Link>
-
                 <Link
-                  href="/academics/curriculum"  {/* FIXED: Added /academics/ prefix */}
+                  href="/academics/curriculum"
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >
@@ -612,7 +609,8 @@ export default function Navbar() {
                 </Link>
               </div>
             </div>
-            {/* Students Dropdown */}
+
+            {/* Students Dropdown - This one works perfectly */}
             <div className="w-full border border-white rounded">
               <button
                 onClick={() => toggleDropdown("students")}

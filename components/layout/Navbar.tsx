@@ -332,6 +332,7 @@
 //     </nav>
 //   );
 // }
+
 "use client";
 
 import Link from "next/link";
@@ -595,7 +596,7 @@ export default function Navbar() {
                 }`}
               >
                 <Link
-                  href="academics/programs"
+                  href="/academics/programs"  {/* FIXED: Added /academics/ prefix */}
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >
@@ -603,7 +604,7 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  href="academics/curriculum"
+                  href="/academics/curriculum"  {/* FIXED: Added /academics/ prefix */}
                   className="block text-center py-1 underline"
                   onClick={() => setIsOpen(false)}
                 >
@@ -612,7 +613,6 @@ export default function Navbar() {
               </div>
             </div>
             {/* Students Dropdown */}
-            {/* Academics Dropdown */}
             <div className="w-full border border-white rounded">
               <button
                 onClick={() => toggleDropdown("students")}
@@ -657,7 +657,6 @@ export default function Navbar() {
                 </Link>
               </div>
             </div>
-            {/* Students Dropdown */}
 
             <Link
               href="/admissions"

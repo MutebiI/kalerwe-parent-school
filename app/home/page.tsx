@@ -1,3 +1,437 @@
+// "use client";
+
+// import { useEffect, useRef, useState } from "react";
+
+// function useCountUp(target: number, duration = 1500) {
+//   const [count, setCount] = useState(0);
+//   useEffect(() => {
+//     let start = 0;
+//     const step = 16;
+//     const increment = target / (duration / step);
+//     const timer = setInterval(() => {
+//       start += increment;
+//       if (start >= target) {
+//         setCount(target);
+//         clearInterval(timer);
+//       } else {
+//         setCount(Math.floor(start));
+//       }
+//     }, step);
+//     return () => clearInterval(timer);
+//   }, [target, duration]);
+//   return count;
+// }
+
+// export default function Home() {
+//   const heroRef = useRef<HTMLElement | null>(null);
+//   const bgRef = useRef<HTMLDivElement | null>(null);
+
+//   // --- Parallax Background ---
+//   useEffect(() => {
+//     const prefersReduced = window.matchMedia(
+//       "(prefers-reduced-motion: reduce)"
+//     ).matches;
+//     if (prefersReduced) return;
+
+//     let ticking = false;
+//     const onScroll = () => {
+//       if (!heroRef.current || !bgRef.current) return;
+//       if (!ticking) {
+//         window.requestAnimationFrame(() => {
+//           const rect = heroRef.current.getBoundingClientRect();
+//           const offset = rect.top * 0.25;
+//           bgRef.current!.style.transform = `translateY(${offset}px)`;
+//           ticking = false;
+//         });
+//         ticking = true;
+//       }
+//     };
+
+//     onScroll();
+//     window.addEventListener("scroll", onScroll, { passive: true });
+//     window.addEventListener("resize", onScroll);
+//     return () => {
+//       window.removeEventListener("scroll", onScroll);
+//       window.removeEventListener("resize", onScroll);
+//     };
+//   }, []);
+
+//   // --- Count-up Logic ---
+//   const statsRef = useRef<HTMLDivElement | null>(null);
+//   const [startCount, setStartCount] = useState(false);
+//   useEffect(() => {
+//     if (!statsRef.current) return;
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         if (entries[0].isIntersecting) {
+//           setStartCount(true);
+//           observer.disconnect();
+//         }
+//       },
+//       { threshold: 0.3 }
+//     );
+//     observer.observe(statsRef.current);
+//     return () => observer.disconnect();
+//   }, []);
+
+//   const students = useCountUp(startCount ? 500 : 0);
+//   const teachers = useCountUp(startCount ? 25 : 0);
+//   const passRate = useCountUp(startCount ? 95 : 0);
+//   const years = useCountUp(startCount ? 44 : 0); // Updated for 1980 start
+
+//   return (
+//     <div className="min-h-screen">
+//       {/* Enhanced Hero Section */}
+//       <section ref={heroRef} className="relative h-screen overflow-hidden">
+//         <div
+//           ref={bgRef}
+//           className="absolute inset-0 bg-cover bg-center"
+//           style={{
+//             backgroundImage: 'url("/kalerwe.jpg")',
+//             willChange: "transform",
+//           }}
+//         />
+//         <div className="absolute inset-0 bg-blue-900/60" />
+        
+//         {/* Animated floating elements */}
+//         <div className="absolute inset-0 overflow-hidden">
+//           <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-yellow-400 rounded-full opacity-30 animate-pulse"></div>
+//           <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-white rounded-full opacity-20 animate-bounce"></div>
+//           <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-yellow-300 rounded-full opacity-40 animate-ping"></div>
+//         </div>
+
+//         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center px-4 sm:px-6 lg:px-8">
+//           <div className="mb-8">
+//             <div className="inline-block bg-yellow-400 text-blue-900 px-6 py-2 rounded-full text-sm font-semibold mb-6 animate-fade-in">
+//               🎓 Est. 1980 • Legacy of Excellence
+//             </div>
+//           </div>
+          
+//           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+//             Welcome to <span className="text-yellow-400 block mt-2">Kalerwe Parent School</span>
+//           </h1>
+          
+//           <p className="text-xl sm:text-2xl text-gray-100 mb-8 max-w-3xl leading-relaxed">
+//             Nurturing Young Minds with <span className="text-yellow-300 font-semibold">Excellence Since 1980</span>. 
+//             Where Every Child's Potential Shines Bright
+//           </p>
+          
+//           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+//             <a
+//               href="/academics/programs"
+//               className="bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg hover:bg-yellow-300 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+//             >
+//               🚀 Explore Our Programs
+//             </a>
+//             <a
+//               href="/schedule"
+//               className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-blue-900 transition-all duration-300 font-semibold text-lg backdrop-blur-sm"
+//             >
+//               📅 Schedule a Tour
+//             </a>
+//           </div>
+
+//           {/* Quick Stats Preview */}
+//           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl">
+//             {[
+//               { number: "44+", label: "Years Legacy" },
+//               { number: "500+", label: "Students" },
+//               { number: "95%", label: "Success Rate" },
+//               { number: "100%", label: "Dedicated" }
+//             ].map((stat, index) => (
+//               <div key={index} className="text-center">
+//                 <div className="text-white text-2xl font-bold">{stat.number}</div>
+//                 <div className="text-yellow-200 text-sm">{stat.label}</div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+
+//         {/* Scroll indicator */}
+//         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+//           <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+//             <div className="w-1 h-3 bg-white rounded-full mt-2"></div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Enhanced Legacy & Excellence Section */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+//         <div className="max-w-7xl mx-auto">
+//           <div className="text-center mb-16">
+//             <h2 className="text-4xl font-bold text-gray-900 mb-4">
+//               A Legacy of <span className="text-blue-600">Educational Excellence</span>
+//             </h2>
+//             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+//               For over four decades, Starlight School has been the cornerstone of quality education, 
+//               transforming young lives through innovative learning and character development.
+//             </p>
+//           </div>
+
+//           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+//             <div className="relative">
+//               <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-white">
+//                 <h3 className="text-2xl font-bold mb-4">🎯 Our Educational Promise</h3>
+//                 <ul className="space-y-3 text-blue-100">
+//                   <li className="flex items-center">
+//                     <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+//                     Complete educational journey from Baby Class to Primary Seven
+//                   </li>
+//                   <li className="flex items-center">
+//                     <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+//                     Modern curriculum with traditional values
+//                   </li>
+//                   <li className="flex items-center">
+//                     <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+//                     Individualized attention in nurturing environment
+//                   </li>
+//                   <li className="flex items-center">
+//                     <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+//                     Preparation for lifelong success and learning
+//                   </li>
+//                 </ul>
+//               </div>
+              
+//               {/* Accent element */}
+//               <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-400 rounded-full opacity-20"></div>
+//             </div>
+
+//             <div className="space-y-6">
+//               <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-blue-600">
+//                 <h4 className="font-semibold text-gray-900 text-lg mb-2">🏆 Proven Track Record</h4>
+//                 <p className="text-gray-600">
+//                   With 44 years of consistent excellence, we've shaped generations of successful 
+//                   students who excel in secondary education and beyond.
+//                 </p>
+//               </div>
+              
+//               <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-green-600">
+//                 <h4 className="font-semibold text-gray-900 text-lg mb-2">💫 Holistic Development</h4>
+//                 <p className="text-gray-600">
+//                   We focus on academic excellence while nurturing character, creativity, and 
+//                   social responsibility in every child.
+//                 </p>
+//               </div>
+              
+//               <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-yellow-600">
+//                 <h4 className="font-semibold text-gray-900 text-lg mb-2">👨‍👩‍👧‍👦 Community Partnership</h4>
+//                 <p className="text-gray-600">
+//                   Working hand-in-hand with parents to ensure each child reaches their full potential 
+//                   in a supportive learning environment.
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Enhanced Academic Programs */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50">
+//         <div className="max-w-7xl mx-auto">
+//           <div className="text-center mb-16">
+//             <h2 className="text-4xl font-bold text-gray-900 mb-4">
+//               Comprehensive <span className="text-blue-600">Educational Pathways</span>
+//             </h2>
+//             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+//               From early childhood foundations to primary completion, we provide seamless 
+//               educational journeys tailored to each developmental stage.
+//             </p>
+//           </div>
+
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+//             {/* Early Years */}
+//             <div className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+//               <div className="relative h-64 overflow-hidden">
+//                 <div
+//                   className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+//                   style={{
+//                     backgroundImage:
+//                       'url("/smallkids.jpg")',
+//                   }}
+//                 />
+//                 <div className="absolute inset-0 bg-blue-900/20"></div>
+//                 <div className="absolute top-4 left-4 bg-yellow-400 text-blue-900 px-4 py-2 rounded-full font-bold">
+//                   Ages 3-6
+//                 </div>
+//               </div>
+//               <div className="p-8">
+//                 <h3 className="text-2xl font-bold text-gray-900 mb-4">🌟 Early Years Foundation</h3>
+//                 <p className="text-gray-600 mb-6 leading-relaxed">
+//                   Nurturing environment where young learners develop essential skills through 
+//                   play-based activities, creative exploration, and social interaction.
+//                 </p>
+//                 <div className="grid grid-cols-2 gap-2 mb-6">
+//                   {["Baby Class", "Middle Class", "Top Class", "Play-Based Learning"].map((item, idx) => (
+//                     <div key={idx} className="flex items-center text-sm text-gray-700">
+//                       <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+//                       {item}
+//                     </div>
+//                   ))}
+//                 </div>
+//                 <a
+//                   href="/academics/programs#early-years"
+//                   className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 group-hover:translate-x-2 transition-transform"
+//                 >
+//                   Explore Early Years Program →
+//                 </a>
+//               </div>
+//             </div>
+
+//             {/* Primary School */}
+//             <div className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+//               <div className="relative h-64 overflow-hidden">
+//                 <div
+//                   className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+//                   style={{
+//                     backgroundImage:
+//                       'url("/kalerwe.jpg")',
+//                   }}
+//                 />
+//                 <div className="absolute inset-0 bg-green-900/20"></div>
+//                 <div className="absolute top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold">
+//                   P1 - P7
+//                 </div>
+//               </div>
+//               <div className="p-8">
+//                 <h3 className="text-2xl font-bold text-gray-900 mb-4">📚 Primary Education</h3>
+//                 <p className="text-gray-600 mb-6 leading-relaxed">
+//                   Comprehensive curriculum building strong academic foundations while fostering 
+//                   critical thinking, creativity, and character development.
+//                 </p>
+//                 <div className="grid grid-cols-2 gap-2 mb-6">
+//                   {["Enhanced Curriculum", "STEM Education", "Creative Arts", "Sports & PE"].map((item, idx) => (
+//                     <div key={idx} className="flex items-center text-sm text-gray-700">
+//                       <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+//                       {item}
+//                     </div>
+//                   ))}
+//                 </div>
+//                 <a
+//                   href="/academics/programs#primary"
+//                   className="inline-flex items-center text-green-600 font-semibold hover:text-green-800 group-hover:translate-x-2 transition-transform"
+//                 >
+//                   Discover Primary Curriculum →
+//                 </a>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Enhanced Student Life */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+//         <div className="max-w-7xl mx-auto">
+//           <div className="text-center mb-16">
+//             <h2 className="text-4xl font-bold text-gray-900 mb-4">
+//               Vibrant <span className="text-blue-600">Student Experience</span>
+//             </h2>
+//             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+//               Beyond academics, we offer diverse opportunities for growth, creativity, and 
+//               character development through engaging extracurricular activities.
+//             </p>
+//           </div>
+
+//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+//             {[
+//               {
+//                 title: "🏆 Sports & Athletics",
+//                 description: "Team sports promoting fitness, discipline and teamwork",
+//                 icon: "⚽"
+//               },
+//               {
+//                 title: "🎵 Music & Performing Arts",
+//                 description: "Creative expression through music, dance and drama",
+//                 icon: "🎭"
+//               },
+//               {
+//                 title: "🔬 STEM Club",
+//                 description: "Hands-on science, technology and innovation projects",
+//                 icon: "🧪"
+//               },
+//               {
+//                 title: "🌍 Community Service",
+//                 description: "Developing social responsibility and leadership",
+//                 icon: "🤝"
+//               }
+//             ].map((activity, idx) => (
+//               <div key={idx} className="group text-center p-8 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-2">
+//                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+//                   {activity.icon}
+//                 </div>
+//                 <h3 className="font-bold text-gray-900 text-lg mb-3">{activity.title}</h3>
+//                 <p className="text-gray-600 text-sm leading-relaxed">{activity.description}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Enhanced Stats Section */}
+//       <section
+//         ref={statsRef}
+//         className="bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+//       >
+//         {/* Background pattern */}
+//         <div className="absolute inset-0 opacity-10">
+//           <div className="absolute top-0 left-0 w-32 h-32 border-2 border-white rounded-full"></div>
+//           <div className="absolute bottom-0 right-0 w-48 h-48 border-2 border-yellow-400 rounded-full"></div>
+//         </div>
+        
+//         <div className="max-w-7xl mx-auto text-center relative z-10">
+//           <h2 className="text-3xl font-bold mb-16">Why Families Choose Starlight School</h2>
+//           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+//             {[
+//               { number: students, suffix: "+", label: "Happy Students" },
+//               { number: teachers, suffix: "+", label: "Expert Educators" },
+//               { number: passRate, suffix: "%", label: "Academic Excellence" },
+//               { number: years, suffix: "+", label: "Years of Legacy" }
+//             ].map((stat, index) => (
+//               <div key={index} className="group">
+//                 <div className="text-4xl md:text-5xl font-bold mb-2 text-yellow-400 group-hover:scale-110 transition-transform duration-300">
+//                   {stat.number}{stat.suffix}
+//                 </div>
+//                 <div className="text-blue-100 font-medium text-lg">{stat.label}</div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Enhanced CTA Section */}
+//       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-yellow-400 to-yellow-500">
+//         <div className="max-w-4xl mx-auto text-center">
+//           <h2 className="text-4xl font-bold text-blue-900 mb-6">
+//             Ready to Join Our Starlight Family?
+//           </h2>
+//           <p className="text-blue-800 text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+//             Experience the difference of 44 years in educational excellence. 
+//             Schedule a personalized tour and see how we can help your child shine.
+//           </p>
+          
+//           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+//             <a
+//               href="/enrollment"
+//               className="bg-blue-900 text-white px-8 py-4 rounded-lg hover:bg-blue-800 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center"
+//             >
+//               📝 Begin Enrollment Process
+//             </a>
+//             <a
+//               href="/contact"
+//               className="bg-white text-blue-900 px-8 py-4 rounded-lg hover:bg-blue-50 transition-all duration-300 font-semibold text-lg border-2 border-blue-900 flex items-center"
+//             >
+//               📞 Contact Our Team
+//             </a>
+//           </div>
+          
+//           <p className="text-blue-700 mt-6 text-sm">
+//             Limited spots available for 2024 academic year • Early enrollment recommended
+//           </p>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// }
+
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -6,7 +440,7 @@ function useCountUp(target: number, duration = 1500) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     let start = 0;
-    const step = 16; // ~60fps
+    const step = 16;
     const increment = target / (duration / step);
     const timer = setInterval(() => {
       start += increment;
@@ -25,6 +459,15 @@ function useCountUp(target: number, duration = 1500) {
 export default function Home() {
   const heroRef = useRef<HTMLElement | null>(null);
   const bgRef = useRef<HTMLDivElement | null>(null);
+  const currentYear = new Date().getFullYear();
+
+  // ✅ ADDED: Dynamic years calculation
+  const calculateYearsOfService = () => {
+    const foundingYear = 1980; // Change this to your school's actual founding year
+    return currentYear - foundingYear;
+  };
+
+  const yearsOfService = calculateYearsOfService();
 
   // --- Parallax Background ---
   useEffect(() => {
@@ -74,16 +517,15 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  // Only start counting when section is visible
   const students = useCountUp(startCount ? 500 : 0);
   const teachers = useCountUp(startCount ? 25 : 0);
   const passRate = useCountUp(startCount ? 95 : 0);
-  const years = useCountUp(startCount ? 30 : 0);
+  const years = useCountUp(startCount ? yearsOfService : 0); // ✅ CHANGED: Now dynamic
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen overflow-hidden">
+      {/* Enhanced Hero Section */}
+      <section ref={heroRef} className="relative h-screen overflow-hidden pt-2 ">
         <div
           ref={bgRef}
           className="absolute inset-0 bg-cover bg-center"
@@ -92,131 +534,228 @@ export default function Home() {
             willChange: "transform",
           }}
         />
-        <div className="absolute inset-0 bg-blue-900/50" />
+        
+        <div className="absolute inset-0 bg-blue-900/60" />
+
+        {/* Animated floating elements-----1 */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-yellow-400 rounded-full opacity-30 animate-pulse"></div>
+          <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-white rounded-full opacity-20 animate-bounce"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-yellow-300 rounded-full opacity-40 animate-ping"></div>
+        </div>
 
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
-            Welcome to <span className="text-yellow-400">Starlight School</span>
+          <div className="mb-8">
+            <div className="inline-block bg-yellow-400 text-blue-900 px-6 py-2 rounded-full text-sm font-semibold mb-6 animate-fade-in">
+              🎓 Est. 1980 • Legacy of Excellence
+            </div>
+          </div>
+          
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            Welcome to <span className="text-yellow-400 block mt-2">Kalerwe Parent School</span>
           </h1>
-          <p className="text-lg sm:text-xl text-gray-100 mb-8 max-w-2xl">
-            Nurturing Excellence Since 1990. Join us to empower students for a
-            brighter future.
+          
+          <p className="text-xl sm:text-2xl text-gray-100 mb-8 max-w-3xl leading-relaxed">
+            Nurturing Young Minds with <span className="text-yellow-300 font-semibold">Excellence Since 1980</span>. 
+            Where Every Child's Potential Shines Bright
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <a
               href="/academics/programs"
-              className="bg-yellow-400 text-blue-900 px-8 py-3 rounded-lg hover:bg-yellow-300 transition font-medium"
+              className="bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg hover:bg-yellow-300 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              Explore Academics
+              🚀 Explore Our Programs
             </a>
             <a
-              href="/admissions"
-              className="border border-white text-white px-8 py-3 rounded-lg hover:bg-blue-800 transition font-medium"
+              href="/schedule"
+              className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-blue-900 transition-all duration-300 font-semibold text-lg backdrop-blur-sm"
             >
-              Schedule a Visit
+              📅 Schedule a Tour
             </a>
+          </div>
+
+          {/* Quick Stats Preview */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl">
+            {[
+              { number: `${yearsOfService}+`, label: "Years Legacy" }, // ✅ CHANGED: Now dynamic
+              { number: "500+", label: "Students" },
+              { number: "95%", label: "Success Rate" },
+              { number: "100%", label: "Dedicated" }
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-white text-2xl font-bold">{stat.number}</div>
+                <div className="text-yellow-200 text-sm">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2"></div>
           </div>
         </div>
       </section>
 
-      {/* About */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative h-80 bg-gray-200 rounded-lg overflow-hidden">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  'url("https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1000&q=80")',
-              }}
-            />
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              About Our School
+      {/* Enhanced Legacy & Excellence Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              A Legacy of <span className="text-blue-600">Educational Excellence</span>
             </h2>
-            <p className="text-gray-600 mb-6">
-              At Starlight School, we have over 30 years of excellence in
-              education. Our dedicated faculty, state-of-the-art facilities, and
-              nurturing environment ensure every student thrives academically
-              and personally.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {/* ✅ CHANGED: Now dynamic years */}
+              For over {yearsOfService} years, Kalerwe Parent School has been the cornerstone of quality education, 
+              transforming young lives through innovative learning and character development.
             </p>
-            <a
-              href="/about"
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              Learn More About Us
-            </a>
+          </div>
+        
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-white">
+                <h3 className="text-2xl font-bold mb-4">🎯 Our Educational Promise</h3>
+                <ul className="space-y-3 text-blue-100">
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                    Complete educational journey from Baby Class to Primary Seven
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                    Modern curriculum with traditional values
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                    Individualized attention in nurturing environment
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                    Preparation for lifelong success and learning
+                  </li>
+                </ul>
+              </div>
+              
+              {/* Accent element */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-400 rounded-full opacity-20"></div>
+            </div>
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-blue-600">
+                <h4 className="font-semibold text-gray-900 text-lg mb-2">🏆 Proven Track Record</h4>
+                <p className="text-gray-600">
+                  {/* ✅ CHANGED: Now dynamic years */}
+                  With {yearsOfService} years of consistent excellence, we've shaped generations of successful 
+                  students who excel in secondary education and beyond.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-green-600">
+                <h4 className="font-semibold text-gray-900 text-lg mb-2">💫 Holistic Development</h4>
+                <p className="text-gray-600">
+                  We focus on academic excellence while nurturing character, creativity, and 
+                  social responsibility in every child.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-yellow-600">
+                <h4 className="font-semibold text-gray-900 text-lg mb-2">👨‍👩‍👧‍👦 Community Partnership</h4>
+                <p className="text-gray-600">
+                  Working hand-in-hand with parents to ensure each child reaches their full potential 
+                  in a supportive learning environment.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Academic Programs */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12">
-            Our Academic Programs
-          </h2>
+      {/* Enhanced Academic Programs */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Comprehensive <span className="text-blue-600">Educational Pathways</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              From early childhood foundations to primary completion, we provide seamless 
+              educational journeys tailored to each developmental stage.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Nursery */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div
-                className="h-48 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    'url("https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=1000&q=80")',
-                }}
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Nursery Program
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Nurturing environment for ages 3-5 with play-based learning,
-                  social development, and school-readiness skills.
+            {/* Early Years */}
+            <div className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-64 overflow-hidden">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                  style={{
+                    backgroundImage:
+                      'url("/smallkids.jpg")',
+                  }}
+                />
+                <div className="absolute inset-0 bg-blue-900/20"></div>
+                <div className="absolute top-4 left-4 bg-yellow-400 text-blue-900 px-4 py-2 rounded-full font-bold">
+                  Ages 3-6
+                </div>
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">🌟 Early Years Foundation</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Nurturing environment where young learners develop essential skills through 
+                  play-based activities, creative exploration, and social interaction.
                 </p>
-                <ul className="text-gray-700 text-sm mb-4 list-disc list-inside space-y-1">
-                  <li>Play-Based Learning</li>
-                  <li>Creative Expression</li>
-                  <li>Early Social Skills</li>
-                </ul>
+                <div className="grid grid-cols-2 gap-2 mb-6">
+                  {["Baby Class", "Middle Class", "Top Class", "Play-Based Learning"].map((item, idx) => (
+                    <div key={idx} className="flex items-center text-sm text-gray-700">
+                      <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+                      {item}
+                    </div>
+                  ))}
+                </div>
                 <a
-                  href="/academics/programs"
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  href="/academics/programs#early-years"
+                  className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 group-hover:translate-x-2 transition-transform"
                 >
-                  Discover More →
+                  Explore Early Years Program →
                 </a>
               </div>
             </div>
 
-            {/* Primary */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div
-                className="h-48 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    'url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=80")',
-                }}
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Primary School Program
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Comprehensive education from P1–P7 with enhanced Ugandan
-                  curriculum, character development, and modern teaching
-                  methods.
+            {/* Primary School */}
+            <div className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-64 overflow-hidden">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                  style={{
+                    backgroundImage:
+                      'url("/kalerwe.jpg")',
+                  }}
+                />
+                <div className="absolute inset-0 bg-green-900/20"></div>
+                <div className="absolute top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold">
+                  P1 - P7
+                </div>
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">📚 Primary Education</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Comprehensive curriculum building strong academic foundations while fostering 
+                  critical thinking, creativity, and character development.
                 </p>
-                <ul className="text-gray-700 text-sm mb-4 list-disc list-inside space-y-1">
-                  <li>Enhanced Ugandan Curriculum</li>
-                  <li>Computer Science &amp; Technology</li>
-                  <li>Religious &amp; Moral Instruction</li>
-                </ul>
+                <div className="grid grid-cols-2 gap-2 mb-6">
+                  {["Enhanced Curriculum", "STEM Education", "Creative Arts", "Sports & PE"].map((item, idx) => (
+                    <div key={idx} className="flex items-center text-sm text-gray-700">
+                      <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                      {item}
+                    </div>
+                  ))}
+                </div>
                 <a
-                  href="/academics/programs"
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  href="/academics/programs#primary"
+                  className="inline-flex items-center text-green-600 font-semibold hover:text-green-800 group-hover:translate-x-2 transition-transform"
                 >
-                  Explore Program →
+                  Discover Primary Curriculum →
                 </a>
               </div>
             </div>
@@ -224,67 +763,115 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Student Life */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-12 text-gray-900">
-            Student Life & Activities
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Enhanced Student Life */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Vibrant <span className="text-blue-600">Student Experience</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Beyond academics, we offer diverse opportunities for growth, creativity, and 
+              character development through engaging extracurricular activities.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Sports",
-                img: "https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=400&q=80",
+                title: "🏆 Sports & Athletics",
+                description: "Team sports promoting fitness, discipline and teamwork",
+                icon: "⚽"
               },
               {
-                title: "Music & Arts",
-                img: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=400&q=80",
+                title: "🎵 Music & Performing Arts",
+                description: "Creative expression through music, dance and drama",
+                icon: "🎭"
               },
               {
-                title: "Science Club",
-                img: "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=400&q=80",
+                title: "🔬 STEM Club",
+                description: "Hands-on science, technology and innovation projects",
+                icon: "🧪"
               },
               {
-                title: "Debate Society",
-                img: "https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=400&q=80",
-              },
-            ].map((item, idx) => (
-              <div key={idx} className="text-center">
-                <div
-                  className="w-full h-40 bg-cover bg-center rounded-lg mb-4 mx-auto"
-                  style={{ backgroundImage: `url("${item.img}")` }}
-                />
-                <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                title: "🌍 Community Service",
+                description: "Developing social responsibility and leadership",
+                icon: "🤝"
+              }
+            ].map((activity, idx) => (
+              <div key={idx} className="group text-center p-8 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-2">
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  {activity.icon}
+                </div>
+                <h3 className="font-bold text-gray-900 text-lg mb-3">{activity.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{activity.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Quick Stats with Count Up */}
+      {/* Enhanced Stats Section */}
       <section
         ref={statsRef}
-        className="bg-blue-700 text-white py-12 px-4 sm:px-6 lg:px-8"
+        className="bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto text-center">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-32 h-32 border-2 border-white rounded-full"></div>
+          <div className="absolute bottom-0 right-0 w-48 h-48 border-2 border-yellow-400 rounded-full"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <h2 className="text-3xl font-bold mb-16">Why Families Choose Our School</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-3xl font-bold">{students}+</div>
-              <div>Students</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold">{teachers}+</div>
-              <div>Qualified Teachers</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold">{passRate}%</div>
-              <div>Pass Rate</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold">{years}+</div>
-              <div>Years of Experience</div>
-            </div>
+            {[
+              { number: students, suffix: "+", label: "Happy Students" },
+              { number: teachers, suffix: "+", label: "Expert Educators" },
+              { number: passRate, suffix: "%", label: "Academic Excellence" },
+              { number: years, suffix: "+", label: "Years of Legacy" } // ✅ CHANGED: Now dynamic
+            ].map((stat, index) => (
+              <div key={index} className="group">
+                <div className="text-4xl md:text-5xl font-bold mb-2 text-yellow-400 group-hover:scale-110 transition-transform duration-300">
+                  {stat.number}{stat.suffix}
+                </div>
+                <div className="text-blue-100 font-medium text-lg">{stat.label}</div>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Enhanced CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-yellow-400 to-yellow-500">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-blue-900 mb-6">
+            Ready to Join Our Family?
+          </h2>
+          <p className="text-blue-800 text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+            {/* ✅ CHANGED: Now dynamic years */}
+            Experience the difference of {yearsOfService} years in educational excellence. 
+            Schedule a personalized tour and see how we can help your child shine.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="/enrollment"
+              className="bg-blue-900 text-white px-8 py-4 rounded-lg hover:bg-blue-800 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center"
+            >
+              📝 Begin Enrollment Process
+            </a>
+            <a
+              href="/contact"
+              className="bg-white text-blue-900 px-8 py-4 rounded-lg hover:bg-blue-50 transition-all duration-300 font-semibold text-lg border-2 border-blue-900 flex items-center"
+            >
+              📞 Contact Our Team
+            </a>
+          </div>
+          
+          <p className="text-blue-700 mt-6 text-sm">
+            Limited spots available for  &copy; {currentYear} academic year • Early enrollment recommended
+          </p>
         </div>
       </section>
     </div>

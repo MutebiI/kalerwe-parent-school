@@ -8,7 +8,7 @@ export default function ProgramsPage() {
       {/* Hero Section */}
       <div className="relative h-64 w-full">
         <Image
-          src="/images/school-programs.jpg"
+          src="/programs.jpg"
           alt="School Programs"
           fill
           className="object-cover brightness-75"
@@ -34,8 +34,7 @@ export default function ProgramsPage() {
               Academic Programs
             </h2>
             <p className="text-gray-600">
-              Our academic structure covers a full primary and secondary
-              curriculum, emphasizing literacy, numeracy, sciences, and
+              Our academic structure covers a full primary curriculum, emphasizing literacy, numeracy, sciences, and
               humanities. Students are encouraged to think critically and apply
               their knowledge in real-life situations.
             </p>
@@ -58,7 +57,7 @@ export default function ProgramsPage() {
             </h2>
             <p className="text-gray-600">
               In line with modern education demands, we integrate vocational
-              training such as computer literacy, tailoring, carpentry, and
+              training such as computer literacy, Sports, environmental care, and
               agriculture, preparing learners for both employment and
               self-reliance.
             </p>

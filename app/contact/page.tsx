@@ -193,7 +193,7 @@ export default function ContactPage() {
       {/* Top Image */}
       <div
         className="h-96 bg-cover bg-center relative"
-        style={{ backgroundImage: 'url("/image/contact.jpg")' }}
+        style={{ backgroundImage: 'url("/contactus.jpg")' }}
       >
         <div className="absolute inset-0 bg-blue-900/50 flex items-center justify-center">
           <h1 className="text-5xl font-bold text-white">Contact Us</h1>

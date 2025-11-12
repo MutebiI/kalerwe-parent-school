@@ -1,1117 +1,5 @@
-// // "use client"
-// // import { useState } from "react";
-
-// // export default function News() {
-// //   // Example generic school news posts with images
-// //   const [newsPosts, setNewsPosts] = useState([
-// //     {
-// //       id: 1,
-// //       title: "Welcome Back to School",
-// //       content: "We welcome all students, staff, and parents to the new term. Stay informed with our latest updates. This term we have new programs, updated syllabus, and special events that will keep everyone engaged throughout the year.",
-// //       date: "October 10, 2025",
-// //       imageUrl: "/images/school-welcome.jpg",
-// //     },
-// //     {
-// //       id: 2,
-// //       title: "Upcoming School Events",
-// //       content: "Please check our events calendar for upcoming school activities, competitions, and exhibitions. There will also be workshops and parent-teacher meetings to ensure smooth communication.",
-// //       date: "October 1, 2025",
-// //       imageUrl: "/images/school-events.jpg",
-// //     },
-// //   ]);
-
-// //   // State to track which post is expanded
-// //   const [expandedPosts, setExpandedPosts] = useState({});
-
-// //   const toggleExpand = (id) => {
-// //     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
-// //   };
-
-// //   return (
-// //     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-// //       <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-
-// //       {newsPosts.map((post) => (
-// //         <div
-// //           key={post.id}
-// //           style={{
-// //             marginBottom: "2rem",
-// //             padding: "1.2rem",
-// //             border: "1px solid #ccc",
-// //             borderRadius: "8px",
-// //             backgroundColor: "#f9f9f9",
-// //           }}
-// //         >
-// //           <h2 style={{ color: "#002244" }}>{post.title}</h2>
-// //           <p style={{ fontSize: "0.85rem", color: "#555" }}>{post.date}</p>
-// //           {post.imageUrl && (
-// //             <img
-// //               src={post.imageUrl}
-// //               alt={post.title}
-// //               style={{ maxWidth: "100%", borderRadius: "8px", marginTop: "1rem" }}
-// //             />
-// //           )}
-// //           <p>
-// //             {expandedPosts[post.id] ? post.content : `${post.content.slice(0, 100)}... `}
-// //             <span
-// //               onClick={() => toggleExpand(post.id)}
-// //               style={{ color: "#002244", cursor: "pointer", fontWeight: "bold" }}
-// //             >
-// //               {expandedPosts[post.id] ? "Show Less" : "Read More"}
-// //             </span>
-// //           </p>
-// //         </div>
-// //       ))}
-
-// //       <div
-// //         style={{
-// //           marginTop: "3rem",
-// //           padding: "1.5rem",
-// //           borderTop: "2px solid #002244",
-// //           textAlign: "center",
-// //         }}
-// //       >
-// //         <h2 style={{ color: "#002244" }}>Subscribe for Updates</h2>
-// //         <p>Enter your email to receive the latest school news directly in your inbox.</p>
-// //         {/* Subscribe form will go here */}
-// //       </div>
-// //     </div>
-// //   );
-// // }
-
-// // "use client";
-// // import { useState, useEffect } from "react";
-// // import { supabase } from "@/lib/supabaseClient";
-
-// // interface NewsPost {
-// //   id: number;
-// //   title: string;
-// //   content: string;
-// //   image_url: string | null;
-// //   created_at: string;
-// // }
-
-// // export default function News() {
-// //   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
-// //   const [loading, setLoading] = useState(true);
-  
-// //   // State to track which post is expanded
-// //   const [expandedPosts, setExpandedPosts] = useState<{[key: number]: boolean}>({});
-
-// //   // Fetch news from your database
-// //   const fetchNews = async () => {
-// //     const { data, error } = await supabase
-// //       .from("news")
-// //       .select("*")
-// //       .order("created_at", { ascending: false });
-    
-// //     if (error) {
-// //       console.error("Error fetching news:", error);
-// //     } else {
-// //       setNewsPosts(data || []);
-// //     }
-// //     setLoading(false);
-// //   };
-
-// //   useEffect(() => {
-// //     fetchNews();
-// //   }, []);
-
-// //   const toggleExpand = (id: number) => {
-// //     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
-// //   };
-
-// //   // Format date from created_at
-// //   const formatDate = (dateString: string) => {
-// //     return new Date(dateString).toLocaleDateString('en-US', {
-// //       year: 'numeric',
-// //       month: 'long',
-// //       day: 'numeric'
-// //     });
-// //   };
-
-// //   if (loading) {
-// //     return (
-// //       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-// //         <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-// //         <p>Loading news...</p>
-// //       </div>
-// //     );
-// //   }
-
-// //   return (
-// //     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-// //       <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-
-// //       {newsPosts.length === 0 ? (
-// //         <p style={{ textAlign: "center", color: "#666" }}>No news posts yet. Check back later!</p>
-// //       ) : (
-// //         newsPosts.map((post) => (
-// //           <div
-// //             key={post.id}
-// //             style={{
-// //               marginBottom: "2rem",
-// //               padding: "1.2rem",
-// //               border: "1px solid #ccc",
-// //               borderRadius: "8px",
-// //               backgroundColor: "#f9f9f9",
-// //             }}
-// //           >
-// //             <h2 style={{ color: "#002244" }}>{post.title}</h2>
-// //             <p style={{ fontSize: "0.85rem", color: "#555" }}>
-// //               {formatDate(post.created_at)}
-// //             </p>
-// //             {post.image_url && (
-// //               <img
-// //                 src={post.image_url}
-// //                 alt={post.title}
-// //                 style={{ 
-// //                   maxWidth: "100%", 
-// //                   maxHeight: "400px",
-// //                   borderRadius: "8px", 
-// //                   marginTop: "1rem",
-// //                   objectFit: "cover" 
-// //                 }}
-// //               />
-// //             )}
-// //             <p style={{ marginTop: "1rem", lineHeight: "1.6" }}>
-// //               {expandedPosts[post.id] ? post.content : `${post.content.slice(0, 100)}... `}
-// //               {post.content.length > 100 && (
-// //                 <span
-// //                   onClick={() => toggleExpand(post.id)}
-// //                   style={{ color: "#002244", cursor: "pointer", fontWeight: "bold", marginLeft: "0.5rem" }}
-// //                 >
-// //                   {expandedPosts[post.id] ? "Show Less" : "Read More"}
-// //                 </span>
-// //               )}
-// //             </p>
-// //           </div>
-// //         ))
-// //       )}
-
-// //       <div
-// //         style={{
-// //           marginTop: "3rem",
-// //           padding: "1.5rem",
-// //           borderTop: "2px solid #002244",
-// //           textAlign: "center",
-// //         }}
-// //       >
-// //         <h2 style={{ color: "#002244" }}>Subscribe for Updates</h2>
-// //         <p>Enter your email to receive the latest school news directly in your inbox.</p>
-// //         {/* Subscribe form will go here */}
-// //       </div>
-// //     </div>
-// //   );
-// // }
-
-// // "use client";
-// // import { useState, useEffect } from "react";
-// // import { supabase } from "@/lib/supabaseClient";
-
-// // interface NewsPost {
-// //   id: number;
-// //   title: string;
-// //   content: string;
-// //   image_url: string | null;
-// //   created_at: string;
-// // }
-
-// // export default function News() {
-// //   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
-// //   const [loading, setLoading] = useState(true);
-  
-// //   // State to track which post is expanded
-// //   const [expandedPosts, setExpandedPosts] = useState<{[key: number]: boolean}>({});
-
-// //   // Fetch news from your database
-// //   const fetchNews = async () => {
-// //     const { data, error } = await supabase
-// //       .from("news")
-// //       .select("*")
-// //       .order("created_at", { ascending: false });
-    
-// //     if (error) {
-// //       console.error("Error fetching news:", error);
-// //     } else {
-// //       setNewsPosts(data || []);
-// //     }
-// //     setLoading(false);
-// //   };
-
-// //   useEffect(() => {
-// //     fetchNews();
-// //   }, []);
-
-// //   const toggleExpand = (id: number) => {
-// //     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
-// //   };
-
-// //   // Format date from created_at
-// //   const formatDate = (dateString: string) => {
-// //     return new Date(dateString).toLocaleDateString('en-US', {
-// //       year: 'numeric',
-// //       month: 'long',
-// //       day: 'numeric'
-// //     });
-// //   };
-
-// //   if (loading) {
-// //     return (
-// //       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-// //         <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-// //         <p>Loading news...</p>
-// //       </div>
-// //     );
-// //   }
-
-// //   return (
-// //     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-// //       <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-
-// //       {newsPosts.length === 0 ? (
-// //         <p style={{ textAlign: "center", color: "#666" }}>No news posts yet. Check back later!</p>
-// //       ) : (
-// //         newsPosts.map((post) => (
-// //           <div
-// //             key={post.id}
-// //             style={{
-// //               marginBottom: "2.5rem",
-// //               padding: "1.5rem",
-// //               border: "1px solid #e1e5e9",
-// //               borderRadius: "12px",
-// //               backgroundColor: "#ffffff",
-// //               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-// //             }}
-// //           >
-// //             <h2 style={{ color: "#002244", marginBottom: "0.5rem", textAlign: "center" }}>
-// //               {post.title}
-// //             </h2>
-// //             <p style={{ 
-// //               fontSize: "0.85rem", 
-// //               color: "#666", 
-// //               textAlign: "center",
-// //               marginBottom: "1.5rem"
-// //             }}>
-// //               {formatDate(post.created_at)}
-// //             </p>
-            
-// //             {post.image_url && (
-// //               <div style={{ 
-// //                 display: "flex", 
-// //                 justifyContent: "center", 
-// //                 marginBottom: "1.5rem" 
-// //               }}>
-// //                 <img
-// //                   src={post.image_url}
-// //                   alt={post.title}
-// //                   style={{ 
-// //                     maxWidth: "100%", 
-// //                     maxHeight: "400px",
-// //                     borderRadius: "8px", 
-// //                     objectFit: "contain",
-// //                     boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-// //                   }}
-// //                 />
-// //               </div>
-// //             )}
-            
-// //             <div style={{ 
-// //               lineHeight: "1.6", 
-// //               color: "#333",
-// //               textAlign: "left"
-// //             }}>
-// //               {expandedPosts[post.id] ? post.content : `${post.content.slice(0, 150)}... `}
-// //               {post.content.length > 150 && (
-// //                 <span
-// //                   onClick={() => toggleExpand(post.id)}
-// //                   style={{ 
-// //                     color: "#002244", 
-// //                     cursor: "pointer", 
-// //                     fontWeight: "bold", 
-// //                     marginLeft: "0.5rem",
-// //                     display: "inline-block",
-// //                     marginTop: "0.5rem"
-// //                   }}
-// //                 >
-// //                   {expandedPosts[post.id] ? "Show Less" : "Read More"}
-// //                 </span>
-// //               )}
-// //             </div>
-// //           </div>
-// //         ))
-// //       )}
-
-// //       <div
-// //         style={{
-// //           marginTop: "3rem",
-// //           padding: "2rem",
-// //           borderTop: "2px solid #002244",
-// //           textAlign: "center",
-// //           backgroundColor: "#f8f9fa",
-// //           borderRadius: "8px"
-// //         }}
-// //       >
-// //         <h2 style={{ color: "#002244", marginBottom: "1rem" }}>Stay Updated</h2>
-// //         <p style={{ color: "#666", marginBottom: "1.5rem" }}>
-// //           Never miss important school announcements and events.
-// //         </p>
-// //         {/* Subscribe form will go here */}
-// //         <div style={{ display: "inline-flex", gap: "0.5rem" }}>
-// //           <input 
-// //             type="email" 
-// //             placeholder="Enter your email"
-// //             style={{
-// //               padding: "0.75rem",
-// //               border: "1px solid #ccc",
-// //               borderRadius: "4px",
-// //               minWidth: "250px"
-// //             }}
-// //           />
-// //           <button
-// //             style={{
-// //               padding: "0.75rem 1.5rem",
-// //               backgroundColor: "#002244",
-// //               color: "white",
-// //               border: "none",
-// //               borderRadius: "4px",
-// //               cursor: "pointer"
-// //             }}
-// //           >
-// //             Subscribe
-// //           </button>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // }
-// // "use client";
-// // import { useState, useEffect } from "react";
-// // import { supabase } from "@/lib/supabaseClient";
-
-// // interface NewsPost {
-// //   id: number;
-// //   title: string;
-// //   content: string;
-// //   image_url: string | null;
-// //   created_at: string;
-// // }
-
-// // export default function News() {
-// //   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
-// //   const [loading, setLoading] = useState(true);
-  
-// //   const [expandedPosts, setExpandedPosts] = useState<{[key: number]: boolean}>({});
-
-// //   const fetchNews = async () => {
-// //     const { data, error } = await supabase
-// //       .from("news")
-// //       .select("*")
-// //       .order("created_at", { ascending: false });
-    
-// //     if (error) console.error("Error fetching news:", error);
-// //     else setNewsPosts(data || []);
-// //     setLoading(false);
-// //   };
-
-// //   useEffect(() => { fetchNews(); }, []);
-
-// //   const toggleExpand = (id: number) => {
-// //     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
-// //   };
-
-// //   // ✅ FIX: Convert line breaks to HTML with proper paragraphs
-// //   const formatContent = (content: string, isExpanded: boolean) => {
-// //     if (!isExpanded && content.length > 150) {
-// //       return content.slice(0, 150) + '...';
-// //     }
-    
-// //     // Convert line breaks to proper HTML paragraphs
-// //     const paragraphs = content.split('\n').filter(p => p.trim() !== '');
-    
-// //     return (
-// //       <div>
-// //         {paragraphs.map((paragraph, index) => (
-// //           <p key={index} style={{ marginBottom: '1rem' }}>
-// //             {paragraph}
-// //           </p>
-// //         ))}
-// //       </div>
-// //     );
-// //   };
-
-// //   const formatDate = (dateString: string) => {
-// //     return new Date(dateString).toLocaleDateString('en-US', {
-// //       year: 'numeric',
-// //       month: 'long',
-// //       day: 'numeric'
-// //     });
-// //   };
-
-// //   if (loading) {
-// //     return (
-// //       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-// //         <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-// //         <p>Loading news...</p>
-// //       </div>
-// //     );
-// //   }
-
-// //   return (
-// //     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-// //       <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-
-// //       {newsPosts.length === 0 ? (
-// //         <p style={{ textAlign: "center", color: "#666" }}>No news posts yet. Check back later!</p>
-// //       ) : (
-// //         newsPosts.map((post) => (
-// //           <div
-// //             key={post.id}
-// //             style={{
-// //               marginBottom: "2.5rem",
-// //               padding: "1.5rem",
-// //               border: "1px solid #e1e5e9",
-// //               borderRadius: "12px",
-// //               backgroundColor: "#ffffff",
-// //               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-// //             }}
-// //           >
-// //             <h2 style={{ color: "#002244", marginBottom: "0.5rem", textAlign: "center" }}>
-// //               {post.title}
-// //             </h2>
-// //             <p style={{ 
-// //               fontSize: "0.85rem", 
-// //               color: "#666", 
-// //               textAlign: "center",
-// //               marginBottom: "1.5rem"
-// //             }}>
-// //               {formatDate(post.created_at)}
-// //             </p>
-            
-// //             {post.image_url && (
-// //               <div style={{ 
-// //                 display: "flex", 
-// //                 justifyContent: "center", 
-// //                 marginBottom: "1.5rem" 
-// //               }}>
-// //                 <img
-// //                   src={post.image_url}
-// //                   alt={post.title}
-// //                   style={{ 
-// //                     maxWidth: "100%", 
-// //                     maxHeight: "400px",
-// //                     borderRadius: "8px", 
-// //                     objectFit: "contain",
-// //                     boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-// //                   }}
-// //                 />
-// //               </div>
-// //             )}
-            
-// //             <div style={{ 
-// //               lineHeight: "1.6", 
-// //               color: "#333",
-// //               textAlign: "left"
-// //             }}>
-// //               {formatContent(post.content, expandedPosts[post.id])}
-              
-// //               {post.content.length > 150 && (
-// //                 <span
-// //                   onClick={() => toggleExpand(post.id)}
-// //                   style={{ 
-// //                     color: "#002244", 
-// //                     cursor: "pointer", 
-// //                     fontWeight: "bold", 
-// //                     marginLeft: "0.5rem",
-// //                     display: "inline-block",
-// //                     marginTop: "0.5rem"
-// //                   }}
-// //                 >
-// //                   {expandedPosts[post.id] ? "Show Less" : "Read More"}
-// //                 </span>
-// //               )}
-// //             </div>
-// //           </div>
-// //         ))
-// //       )}
-
-// //       <div
-// //         style={{
-// //           marginTop: "3rem",
-// //           padding: "2rem",
-// //           borderTop: "2px solid #002244",
-// //           textAlign: "center",
-// //           backgroundColor: "#f8f9fa",
-// //           borderRadius: "8px"
-// //         }}
-// //       >
-// //         <h2 style={{ color: "#002244", marginBottom: "1rem" }}>Stay Updated</h2>
-// //         <p style={{ color: "#666", marginBottom: "1.5rem" }}>
-// //           Never miss important school announcements and events.
-// //         </p>
-// //         <div style={{ display: "inline-flex", gap: "0.5rem" }}>
-// //           <input 
-// //             type="email" 
-// //             placeholder="Enter your email"
-// //             style={{
-// //               padding: "0.75rem",
-// //               border: "1px solid #ccc",
-// //               borderRadius: "4px",
-// //               minWidth: "250px"
-// //             }}
-// //           />
-// //           <button
-// //             style={{
-// //               padding: "0.75rem 1.5rem",
-// //               backgroundColor: "#002244",
-// //               color: "white",
-// //               border: "none",
-// //               borderRadius: "4px",
-// //               cursor: "pointer"
-// //             }}
-// //           >
-// //             Subscribe
-// //           </button>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // }
-
-// // "use client";
-// // import { useState, useEffect } from "react";
-// // import { supabase } from "@/lib/supabaseClient";
-
-// // interface NewsPost {
-// //   id: number;
-// //   title: string;
-// //   content: string;
-// //   image_url: string | null;
-// //   created_at: string;
-// // }
-
-// // export default function News() {
-// //   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
-// //   const [loading, setLoading] = useState(true);
-  
-// //   const [expandedPosts, setExpandedPosts] = useState<{[key: number]: boolean}>({});
-
-// //   const fetchNews = async () => {
-// //     const { data, error } = await supabase
-// //       .from("news")
-// //       .select("*")
-// //       .order("created_at", { ascending: false });
-    
-// //     if (error) console.error("Error fetching news:", error);
-// //     else setNewsPosts(data || []);
-// //     setLoading(false);
-// //   };
-
-// //   useEffect(() => { fetchNews(); }, []);
-
-// //   const toggleExpand = (id: number) => {
-// //     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
-// //   };
-
-// //   // ✅ FIXED: Now properly handles HTML content with truncation
-// //   const formatContent = (content: string, isExpanded: boolean, postId: number) => {
-// //     // If not expanded and content is long, show truncated version
-// //     if (!isExpanded && content.length > 150) {
-// //       // Create a temporary div to parse HTML and get text content for truncation
-// //       const tempDiv = document.createElement('div');
-// //       tempDiv.innerHTML = content;
-// //       const textContent = tempDiv.textContent || tempDiv.innerText || '';
-      
-// //       if (textContent.length > 150) {
-// //         return (
-// //           <div>
-// //             <div 
-// //               dangerouslySetInnerHTML={{ __html: content.slice(0, 150) + '...' }} 
-// //             />
-// //           </div>
-// //         );
-// //       }
-// //     }
-    
-// //     // Show full content with HTML rendering
-// //     return (
-// //       <div 
-// //         dangerouslySetInnerHTML={{ __html: content }} 
-// //       />
-// //     );
-// //   };
-
-// //   const formatDate = (dateString: string) => {
-// //     return new Date(dateString).toLocaleDateString('en-US', {
-// //       year: 'numeric',
-// //       month: 'long',
-// //       day: 'numeric'
-// //     });
-// //   };
-
-// //   if (loading) {
-// //     return (
-// //       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-// //         <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-// //         <p>Loading news...</p>
-// //       </div>
-// //     );
-// //   }
-
-// //   return (
-// //     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-// //       <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-
-// //       {newsPosts.length === 0 ? (
-// //         <p style={{ textAlign: "center", color: "#666" }}>No news posts yet. Check back later!</p>
-// //       ) : (
-// //         newsPosts.map((post) => (
-// //           <div
-// //             key={post.id}
-// //             style={{
-// //               marginBottom: "2.5rem",
-// //               padding: "1.5rem",
-// //               border: "1px solid #e1e5e9",
-// //               borderRadius: "12px",
-// //               backgroundColor: "#ffffff",
-// //               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-// //             }}
-// //           >
-// //             <h2 style={{ color: "#002244", marginBottom: "0.5rem", textAlign: "center" }}>
-// //               {post.title}
-// //             </h2>
-// //             <p style={{ 
-// //               fontSize: "0.85rem", 
-// //               color: "#666", 
-// //               textAlign: "center",
-// //               marginBottom: "1.5rem"
-// //             }}>
-// //               {formatDate(post.created_at)}
-// //             </p>
-            
-// //             {post.image_url && (
-// //               <div style={{ 
-// //                 display: "flex", 
-// //                 justifyContent: "center", 
-// //                 marginBottom: "1.5rem" 
-// //               }}>
-// //                 <img
-// //                   src={post.image_url}
-// //                   alt={post.title}
-// //                   style={{ 
-// //                     maxWidth: "100%", 
-// //                     maxHeight: "400px",
-// //                     borderRadius: "8px", 
-// //                     objectFit: "contain",
-// //                     boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-// //                   }}
-// //                 />
-// //               </div>
-// //             )}
-            
-// //             <div 
-// //               className="news-content"
-// //               style={{ 
-// //                 lineHeight: "1.6", 
-// //                 color: "#333",
-// //                 textAlign: "left"
-// //               }}
-// //             >
-// //               {formatContent(post.content, expandedPosts[post.id], post.id)}
-              
-// //               {post.content.length > 150 && (
-// //                 <span
-// //                   onClick={() => toggleExpand(post.id)}
-// //                   style={{ 
-// //                     color: "#002244", 
-// //                     cursor: "pointer", 
-// //                     fontWeight: "bold", 
-// //                     marginLeft: "0.5rem",
-// //                     display: "inline-block",
-// //                     marginTop: "0.5rem"
-// //                   }}
-// //                 >
-// //                   {expandedPosts[post.id] ? "Show Less" : "Read More"}
-// //                 </span>
-// //               )}
-// //             </div>
-
-// //             {/* Add CSS for HTML elements */}
-// //             <style jsx>{`
-// //               .news-content h1, .news-content h2, .news-content h3 {
-// //                 margin: 1rem 0 0.5rem 0;
-// //                 color: #002244;
-// //               }
-// //               .news-content h3 {
-// //                 font-size: 1.3rem;
-// //                 border-bottom: 1px solid #002244;
-// //                 padding-bottom: 0.3rem;
-// //               }
-// //               .news-content p {
-// //                 margin-bottom: 1rem;
-// //               }
-// //               .news-content ul, .news-content ol {
-// //                 margin: 0.5rem 0;
-// //                 padding-left: 1.5rem;
-// //               }
-// //               .news-content li {
-// //                 margin-bottom: 0.3rem;
-// //               }
-// //               .news-content strong {
-// //                 font-weight: bold;
-// //                 color: #002244;
-// //               }
-// //               .news-content em {
-// //                 font-style: italic;
-// //               }
-// //               .news-content u {
-// //                 text-decoration: underline;
-// //               }
-// //               .news-content a {
-// //                 color: #0066cc;
-// //                 text-decoration: none;
-// //               }
-// //               .news-content a:hover {
-// //                 text-decoration: underline;
-// //               }
-// //               .news-content div[style*="text-align: center"] {
-// //                 text-align: center;
-// //                 margin: 0.5rem 0;
-// //               }
-// //               .news-content span[style*="color: red"] {
-// //                 color: red !important;
-// //               }
-// //               .news-content span[style*="color: blue"] {
-// //                 color: blue !important;
-// //               }
-// //               .news-content span[style*="color: green"] {
-// //                 color: green !important;
-// //               }
-// //             `}</style>
-// //           </div>
-// //         ))
-// //       )}
-
-// //       <div
-// //         style={{
-// //           marginTop: "3rem",
-// //           padding: "2rem",
-// //           borderTop: "2px solid #002244",
-// //           textAlign: "center",
-// //           backgroundColor: "#f8f9fa",
-// //           borderRadius: "8px"
-// //         }}
-// //       >
-// //         <h2 style={{ color: "#002244", marginBottom: "1rem" }}>Stay Updated</h2>
-// //         <p style={{ color: "#666", marginBottom: "1.5rem" }}>
-// //           Never miss important school announcements and events.
-// //         </p>
-// //         <div style={{ display: "inline-flex", gap: "0.5rem" }}>
-// //           <input 
-// //             type="email" 
-// //             placeholder="Enter your email"
-// //             style={{
-// //               padding: "0.75rem",
-// //               border: "1px solid #ccc",
-// //               borderRadius: "4px",
-// //               minWidth: "250px"
-// //             }}
-// //           />
-// //           <button
-// //             style={{
-// //               padding: "0.75rem 1.5rem",
-// //               backgroundColor: "#002244",
-// //               color: "white",
-// //               border: "none",
-// //               borderRadius: "4px",
-// //               cursor: "pointer"
-// //             }}
-// //           >
-// //             Subscribe
-// //           </button>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // }
-
-// "use client";
-// import { useState, useEffect } from "react";
-// import { supabase } from "@/lib/supabaseClient";
-
-// interface NewsPost {
-//   id: number;
-//   title: string;
-//   content: string;
-//   image_url: string | null;
-//   created_at: string;
-// }
-
-// export default function News() {
-//   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
-//   const [loading, setLoading] = useState(true);
-  
-//   const [expandedPosts, setExpandedPosts] = useState<{[key: number]: boolean}>({});
-
-//   const fetchNews = async () => {
-//     const { data, error } = await supabase
-//       .from("news")
-//       .select("*")
-//       .order("created_at", { ascending: false });
-    
-//     if (error) console.error("Error fetching news:", error);
-//     else setNewsPosts(data || []);
-//     setLoading(false);
-//   };
-
-//   useEffect(() => { fetchNews(); }, []);
-
-//   const toggleExpand = (id: number) => {
-//     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
-//   };
-
-//   // ✅ FIXED: Properly handles HTML content with preserved spacing
-//   const formatContent = (content: string, isExpanded: boolean, postId: number) => {
-//     // If not expanded and content is long, show truncated version
-//     if (!isExpanded && content.length > 150) {
-//       // Create a temporary div to parse HTML and get text content for truncation
-//       const tempDiv = document.createElement('div');
-//       tempDiv.innerHTML = content;
-//       const textContent = tempDiv.textContent || tempDiv.innerText || '';
-      
-//       if (textContent.length > 150) {
-//         return (
-//           <div 
-//             className="news-content"
-//             dangerouslySetInnerHTML={{ __html: content.slice(0, 150) + '...' }} 
-//           />
-//         );
-//       }
-//     }
-     
-//     // Show full content with HTML rendering
-//     return (
-//       <div 
-//         className="news-content"
-//         dangerouslySetInnerHTML={{ __html: content }} 
-//       />
-//     );
-//   };
-
-//   const formatDate = (dateString: string) => {
-//     return new Date(dateString).toLocaleDateString('en-US', {
-//       year: 'numeric',
-//       month: 'long',
-//       day: 'numeric'
-//     });
-//   };
-
-//   if (loading) {
-//     return (
-//       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-//         <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-//         <p>Loading news...</p>
-//       </div>
-//     );
-//   }
-// //News page automated or activated here and there 
-//   return (
-//     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-//       <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-
-//       {newsPosts.length === 0 ? (
-//         <p style={{ textAlign: "center", color: "#666" }}>No news posts yet. Check back later!</p>
-//       ) : (
-//         newsPosts.map((post) => (
-//           <div
-//             key={post.id}
-//             style={{
-//               marginBottom: "2.5rem",
-//               padding: "1.5rem",
-//               border: "1px solid #e1e5e9",
-//               borderRadius: "12px",
-//               backgroundColor: "#ffffff",
-//               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-//             }}
-//           >
-//             <h2 style={{ color: "#002244", marginBottom: "0.5rem", textAlign: "center" }}><b>
-//               {post.title}
-//               </b>
-//             </h2>
-//             <p style={{ 
-//               fontSize: "0.85rem", 
-//               color: "#666", 
-//               textAlign: "center",
-//               marginBottom: "1.5rem"
-//             }}><b>
-//               {formatDate(post.created_at)}
-              
-//               </b>
-//             </p>
-            
-//             {post.image_url && (
-//               <div style={{ 
-//                 display: "flex", 
-//                 justifyContent: "center", 
-//                 marginBottom: "1.5rem" 
-//               }}>
-//                 <img
-//                   src={post.image_url}
-//                   alt={post.title}
-//                   style={{ 
-//                     maxWidth: "100%", 
-//                     maxHeight: "400px",
-//                     borderRadius: "8px", 
-//                     objectFit: "contain",
-//                     boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-//                   }}
-//                 />
-//               </div>
-//             )}
-            
-//             <div style={{ 
-//               lineHeight: "1.6", 
-//               color: "#333",
-//               textAlign: "left"
-//             }}>
-//               {formatContent(post.content, expandedPosts[post.id], post.id)}
-              
-//               {post.content.length > 150 && (
-//                 <span
-//                   onClick={() => toggleExpand(post.id)}
-//                   style={{ 
-//                     color: "#002244", 
-//                     cursor: "pointer", 
-//                     fontWeight: "bold", 
-//                     marginLeft: "0.5rem",
-//                     display: "inline-block",
-//                     marginTop: "0.5rem"
-//                   }}
-//                 >
-//                   {expandedPosts[post.id] ? "Show Less" : "Read More"}
-//                 </span>
-//               )}
-//             </div>
-
-//             {/* Add CSS for HTML elements with proper spacing */}
-//             <style jsx>{`
-//               .news-content {
-//                 white-space: normal;
-//                 line-height: 1.7;
-//               }
-//               .news-content h1, .news-content h2, .news-content h3, .news-content h4 {
-//                 margin: 1.5rem 0 1rem 0;
-//                 color: #002244;
-//                 line-height: 1.3;
-//               }
-//               .news-content h3 {
-//                 font-size: 1.4rem;
-//                 border-bottom: 2px solid #002244;
-//                 padding-bottom: 0.5rem;
-//               }
-//               .news-content p {
-//                 margin-bottom: 1.2rem;
-//                 line-height: 1.7;
-//               }
-//               .news-content ul, .news-content ol {
-//                 margin: 1rem 0 1rem 1.5rem;
-//                 padding-left: 1.5rem;
-//               }
-//               .news-content li {
-//                 margin-bottom: 0.5rem;
-//                 line-height: 1.6;
-//               }
-//               .news-content strong {
-//                 font-weight: bold;
-//                 color: #002244;
-//               }
-//               .news-content em {
-//                 font-style: italic;
-//               }
-//               .news-content u {
-//                 text-decoration: underline;
-//               }
-//               .news-content a {
-//                 color: #0066cc;
-//                 text-decoration: none;
-//               }
-//               .news-content a:hover {
-//                 text-decoration: underline;
-//               }
-//               .news-content div[style*="text-align: center"] {
-//                 text-align: center;
-//                 margin: 1rem 0;
-//               }
-//               .news-content span[style*="color: red"] {
-//                 color: red !important;
-//               }
-//               .news-content span[style*="color: blue"] {
-//                 color: blue !important;
-//               }
-//               .news-content span[style*="color: green"] {
-//                 color: green !important;
-//               }
-//               /* Ensure proper spacing between all elements */
-//               .news-content * {
-//                 margin-top: 0.8rem;
-//                 margin-bottom: 0.8rem;
-//               }
-//               .news-content *:first-child {
-//                 margin-top: 0;
-//               }
-//               .news-content *:last-child {
-//                 margin-bottom: 0;
-//               }
-//             `}</style>
-//           </div>
-//         ))
-//       )}
-
-//       <div
-//         style={{
-//           marginTop: "3rem",
-//           padding: "2rem",
-//           borderTop: "2px solid #002244",
-//           textAlign: "center",
-//           backgroundColor: "#f8f9fa",
-//           borderRadius: "8px"
-//         }}
-//       >
-//         <h2 style={{ color: "#002244", marginBottom: "1rem" }}>Stay Updated</h2>
-//         <p style={{ color: "#666", marginBottom: "1.5rem" }}>
-//           Never miss important school announcements and events.
-//         </p>
-//         <div style={{ display: "inline-flex", gap: "0.5rem" }}>
-//           <input 
-//             type="email" 
-//             placeholder="Enter your email"
-//             style={{
-//               padding: "0.75rem",
-//               border: "1px solid #ccc",
-//               borderRadius: "4px",
-//               minWidth: "250px"
-//             }}
-//           />
-//           <button
-//             style={{
-//               padding: "0.75rem 1.5rem",
-//               backgroundColor: "#002244",
-//               color: "white",
-//               border: "none",
-//               borderRadius: "4px",
-//               cursor: "pointer"
-//             }}
-//           >
-//             Subscribe
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 interface NewsPost {
@@ -1122,7 +10,7 @@ interface NewsPost {
   created_at: string;
 }
 
-// ✅ ADDED: Same Cache System from Dashboard
+// Cache System (KEEPING YOUR EXISTING CACHE)
 interface CacheData {
   data: any;
   timestamp: number;
@@ -1130,7 +18,7 @@ interface CacheData {
 }
 
 class AppCache {
-  private static readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+  private static readonly CACHE_DURATION = 5 * 60 * 1000;
   private static readonly CACHE_VERSION = 'v1';
 
   static set(key: string, data: any): void {
@@ -1145,7 +33,7 @@ class AppCache {
     try {
       localStorage.setItem(`cache_${key}`, JSON.stringify(cacheData));
     } catch (error) {
-      console.warn('Cache storage failed, clearing older entries:', error);
+      console.warn('Cache storage failed:', error);
       this.clearOldEntries();
     }
   }
@@ -1159,7 +47,6 @@ class AppCache {
 
       const cacheData: CacheData = JSON.parse(cached);
       
-      // Check if cache is valid and not expired
       if (cacheData.version !== this.CACHE_VERSION) {
         this.remove(key);
         return null;
@@ -1172,7 +59,6 @@ class AppCache {
       
       return cacheData.data;
     } catch (error) {
-      console.warn('Cache retrieval failed:', error);
       this.remove(key);
       return null;
     }
@@ -1181,14 +67,6 @@ class AppCache {
   static remove(key: string): void {
     if (typeof window === 'undefined') return;
     localStorage.removeItem(`cache_${key}`);
-  }
-
-  static clearAll(): void {
-    if (typeof window === 'undefined') return;
-    
-    Object.keys(localStorage)
-      .filter(key => key.startsWith('cache_'))
-      .forEach(key => localStorage.removeItem(key));
   }
 
   private static clearOldEntries(): void {
@@ -1212,25 +90,97 @@ class AppCache {
   }
 }
 
+// ✅ NEW: Lazy Image Component
+const LazyImage = ({ 
+  src, 
+  alt, 
+  className, 
+  onClick, 
+  maxHeight 
+}: { 
+  src: string; 
+  alt: string; 
+  className?: string;
+  onClick?: () => void;
+  maxHeight?: string;
+}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [inView, setInView] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '50px' } // Start loading 50px before image enters viewport
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={imgRef} className={className}>
+      {inView ? (
+        <img
+          src={src}
+          alt={alt}
+          onClick={onClick}
+          className={`transition-opacity duration-300 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          } ${className}`}
+          style={{ 
+            maxHeight: maxHeight || 'none',
+            maxWidth: '100%'
+          }}
+          onLoad={() => setIsLoaded(true)}
+          loading="lazy" // Native lazy loading as fallback
+        />
+      ) : (
+        // Loading placeholder
+        <div 
+          className="bg-gray-200 animate-pulse rounded-lg flex items-center justify-center"
+          style={{ 
+            height: maxHeight || '300px',
+            maxWidth: '100%'
+          }}
+        >
+          <span className="text-gray-400 text-sm">Loading...</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function News() {
   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
   const [loading, setLoading] = useState(true);
-  
   const [expandedPosts, setExpandedPosts] = useState<{[key: number]: boolean}>({});
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageTitle, setSelectedImageTitle] = useState<string>("");
+  const [selectedPost, setSelectedPost] = useState<NewsPost | null>(null);
 
-  // ✅ ENHANCED: Fetch News with Caching
-  const fetchNews = async (forceRefresh: boolean = false) => {
-    // Try cache first unless forced refresh
-    if (!forceRefresh) {
-      const cachedNews = AppCache.get('news');
-      if (cachedNews) {
-        setNewsPosts(cachedNews);
-        setLoading(false);
-        return; // Use cache, no API call needed
-      }
+  // ✅ NEW: Performance optimization - only load visible content
+  const [visiblePosts, setVisiblePosts] = useState<number>(6); // Initial load count
+
+  const fetchNews = async () => {
+    // ✅ FIRST: Always try cache first (super fast)
+    const cachedNews = AppCache.get('news');
+    if (cachedNews) {
+      setNewsPosts(cachedNews);
+      setSelectedPost(cachedNews[0] || null);
+      setLoading(false);
+      return;
     }
 
-    // Fetch from Supabase if no cache or forced
+    // ✅ SECOND: Only fetch from Supabase if no cache exists
     const { data, error } = await supabase
       .from("news")
       .select("*")
@@ -1238,29 +188,78 @@ export default function News() {
     
     if (error) {
       console.error("Error fetching news:", error);
-      // If API fails, try to use cached data as fallback
       const cachedNews = AppCache.get('news');
       if (cachedNews) {
         setNewsPosts(cachedNews);
+        setSelectedPost(cachedNews[0] || null);
       }
     } else {
       setNewsPosts(data || []);
-      AppCache.set('news', data); // Update cache
+      setSelectedPost(data?.[0] || null);
+      AppCache.set('news', data);
     }
     setLoading(false);
   };
 
-  useEffect(() => { fetchNews(); }, []);
+  useEffect(() => { 
+    fetchNews(); 
+  }, []);
+
+  // ✅ NEW: Load more posts when scrolling (for mobile view)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth < 1024) { // Only for mobile
+        const scrollTop = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        // Load more when 80% scrolled
+        if (scrollTop + windowHeight >= documentHeight * 0.8) {
+          setVisiblePosts(prev => Math.min(prev + 3, newsPosts.length));
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [newsPosts.length]);
 
   const toggleExpand = (id: number) => {
     setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // ✅ FIXED: Properly handles HTML content with preserved spacing
+  const selectPost = (post: NewsPost) => {
+    setSelectedPost(post);
+  };
+
+  const openImageModal = (imageUrl: string, title: string) => {
+    setSelectedImage(imageUrl);
+    setSelectedImageTitle(title);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+    setSelectedImageTitle("");
+  };
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeImageModal();
+    };
+    
+    if (selectedImage) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
+
   const formatContent = (content: string, isExpanded: boolean, postId: number) => {
-    // If not expanded and content is long, show truncated version
     if (!isExpanded && content.length > 150) {
-      // Create a temporary div to parse HTML and get text content for truncation
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content;
       const textContent = tempDiv.textContent || tempDiv.innerText || '';
@@ -1275,7 +274,6 @@ export default function News() {
       }
     }
      
-    // Show full content with HTML rendering
     return (
       <div 
         className="news-content"
@@ -1292,228 +290,370 @@ export default function News() {
     });
   };
 
-  // ✅ ADDED: Manual refresh for users
-  const handleForceRefresh = () => {
-    setLoading(true);
-    fetchNews(true);
-  };
+  // ✅ Get other posts (excluding the currently selected one)
+  const otherPosts = newsPosts.filter(post => post.id !== selectedPost?.id);
+
+  // ✅ NEW: Optimized mobile posts (only show visible ones)
+  const mobilePosts = newsPosts.slice(0, visiblePosts);
 
   if (loading) {
     return (
-      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-        <h1 style={{ textAlign: "center", color: "#002244", marginBottom: "2rem" }}>School News</h1>
-        <p>Loading news...</p>
+      <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 px-4 py-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-center text-blue-800 mb-8 text-2xl font-bold">School News</h1>
+          <p className="text-center text-blue-700">Loading news...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      {/* ✅ ADDED: Refresh Button for Users */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 style={{ color: "#002244", margin: 0 }}>School News</h1>
-        <button
-          onClick={handleForceRefresh}
-          style={{
-            padding: "0.5rem 1rem",
-            backgroundColor: "#002244",
-            color: "#fff",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer",
-            fontSize: "0.9rem"
-          }}
-        >
-          🔄 Refresh
-        </button>
-      </div>
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <h1 className="text-blue-800 text-2xl font-bold text-center mb-8">School News</h1>
 
-      {newsPosts.length === 0 ? (
-        <p style={{ textAlign: "center", color: "#666" }}>No news posts yet. Check back later!</p>
-      ) : (
-        newsPosts.map((post) => (
-          <div
-            key={post.id}
-            style={{
-              marginBottom: "2.5rem",
-              padding: "1.5rem",
-              border: "1px solid #e1e5e9",
-              borderRadius: "12px",
-              backgroundColor: "#ffffff",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h2 style={{ color: "#002244", marginBottom: "0.5rem", textAlign: "center" }}><b>
-              {post.title}
-              </b>
-            </h2>
-            <p style={{ 
-              fontSize: "0.85rem", 
-              color: "#666", 
-              textAlign: "center",
-              marginBottom: "1.5rem"
-            }}><b>
-              {formatDate(post.created_at)}
-              </b>
-            </p>
-            
-            {post.image_url && (
-              <div style={{ 
-                display: "flex", 
-                justifyContent: "center", 
-                marginBottom: "1.5rem" 
-              }}>
-                <img
-                  src={post.image_url}
-                  alt={post.title}
-                  style={{ 
-                    maxWidth: "100%", 
-                    maxHeight: "400px",
-                    borderRadius: "8px", 
-                    objectFit: "contain",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-                  }}
-                />
-              </div>
-            )}
-            
-            <div style={{ 
-              lineHeight: "1.6", 
-              color: "#333",
-              textAlign: "left"
-            }}>
-              {formatContent(post.content, expandedPosts[post.id], post.id)}
-              
-              {post.content.length > 150 && (
-                <span
-                  onClick={() => toggleExpand(post.id)}
-                  style={{ 
-                    color: "#002244", 
-                    cursor: "pointer", 
-                    fontWeight: "bold", 
-                    marginLeft: "0.5rem",
-                    display: "inline-block",
-                    marginTop: "0.5rem"
-                  }}
-                >
-                  {expandedPosts[post.id] ? "Show Less" : "Read More"}
-                </span>
+        {newsPosts.length === 0 ? (
+          <p className="text-center text-blue-700">No news posts yet. Check back later!</p>
+        ) : (
+          /* ✅ DESKTOP: Two-column layout */
+          <div className="hidden lg:flex flex-col lg:flex-row gap-8">
+            {/* ✅ MAIN COLUMN - Featured News */}
+            <div className="lg:flex-1">
+              {selectedPost && (
+                <div className="w-full bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-200 p-6 hover:shadow-xl transition-all duration-300">
+                  <div className="relative mb-4">
+                    <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mb-2"></div>
+                    <h2 className="text-blue-800 text-xl md:text-2xl font-bold text-center px-4">
+                      {selectedPost.title}
+                    </h2>
+                    <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mt-2"></div>
+                  </div>
+                  
+                  <div className="relative mb-6">
+                    <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mb-2"></div>
+                    <p className="text-sm text-blue-600 font-semibold text-center">
+                      📅 {formatDate(selectedPost.created_at)}
+                    </p>
+                    <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mt-2"></div>
+                  </div>
+                  
+                  {selectedPost.image_url && (
+                    <div className="flex justify-center mb-6">
+                      <div 
+                        className="cursor-pointer transition-transform hover:scale-105 duration-200 w-full max-w-full"
+                        onClick={() => openImageModal(selectedPost.image_url!, selectedPost.title)}
+                      >
+                        {/* ✅ UPDATED: Using LazyImage for main featured image */}
+                        <LazyImage
+                          src={selectedPost.image_url}
+                          alt={selectedPost.title}
+                          className="w-full max-w-full rounded-lg object-contain mx-auto"
+                          maxHeight="400px"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="text-gray-800 leading-relaxed">
+                    {formatContent(selectedPost.content, expandedPosts[selectedPost.id], selectedPost.id)}
+                    
+                    {selectedPost.content.length > 150 && (
+                      <div className="mt-6 flex flex-col items-center">
+                        {expandedPosts[selectedPost.id] && (
+                          <div className="mb-4 text-center">
+                            <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mb-2"></div>
+                            <p className="text-sm text-blue-600 font-medium">
+                              📅 Published on: {formatDate(selectedPost.created_at)}
+                            </p>
+                            <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mt-2"></div>
+                          </div>
+                        )}
+                        <button
+                          onClick={() => toggleExpand(selectedPost.id)}
+                          className="text-blue-700 font-bold px-6 py-3 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors focus:outline-none border border-blue-300"
+                        >
+                          {expandedPosts[selectedPost.id] ? "Show Less" : "Read More"}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
 
-            {/* Add CSS for HTML elements with proper spacing */}
-            <style jsx>{`
-              .news-content {
-                white-space: normal;
-                line-height: 1.7;
-              }
-              .news-content h1, .news-content h2, .news-content h3, .news-content h4 {
-                margin: 1.5rem 0 1rem 0;
-                color: #002244;
-                line-height: 1.3;
-              }
-              .news-content h3 {
-                font-size: 1.4rem;
-                border-bottom: 2px solid #002244;
-                padding-bottom: 0.5rem;
-              }
-              .news-content p {
-                margin-bottom: 1.2rem;
-                line-height: 1.7;
-              }
-              .news-content ul, .news-content ol {
-                margin: 1rem 0 1rem 1.5rem;
-                padding-left: 1.5rem;
-              }
-              .news-content li {
-                margin-bottom: 0.5rem;
-                line-height: 1.6;
-              }
-              .news-content strong {
-                font-weight: bold;
-                color: #002244;
-              }
-              .news-content em {
-                font-style: italic;
-              }
-              .news-content u {
-                text-decoration: underline;
-              }
-              .news-content a {
-                color: #0066cc;
-                text-decoration: none;
-              }
-              .news-content a:hover {
-                text-decoration: underline;
-              }
-              .news-content div[style*="text-align: center"] {
-                text-align: center;
-                margin: 1rem 0;
-              }
-              .news-content span[style*="color: red"] {
-                color: red !important;
-              }
-              .news-content span[style*="color: blue"] {
-                color: blue !important;
-              }
-              .news-content span[style*="color: green"] {
-                color: green !important;
-              }
-              /* Ensure proper spacing between all elements */
-              .news-content * {
-                margin-top: 0.8rem;
-                margin-bottom: 0.8rem;
-              }
-              .news-content *:first-child {
-                margin-top: 0;
-              }
-              .news-content *:last-child {
-                margin-bottom: 0;
-              }
-            `}</style>
+            {/* ✅ SIDEBAR COLUMN - Other News */}
+            <div className="lg:w-80">
+              <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-200 p-6 sticky top-8">
+                <h3 className="text-blue-800 text-lg font-bold text-center mb-4 pb-2 border-b border-blue-200">
+                  Other News
+                </h3>
+                <div className="space-y-4 max-h-[600px] overflow-y-auto">
+                  {otherPosts.map((post) => (
+                    <div
+                      key={post.id}
+                      className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 hover:shadow-md hover:border-blue-300 transition-all duration-200 cursor-pointer"
+                      onClick={() => selectPost(post)}
+                    >
+                      <h4 className="text-blue-800 font-semibold text-sm mb-2 line-clamp-2">
+                        {post.title}
+                      </h4>
+                      <p className="text-blue-600 text-xs">
+                        📅 {formatDate(post.created_at)}
+                      </p>
+                      {post.image_url && (
+                        /* ✅ UPDATED: Using LazyImage for sidebar thumbnails */
+                        <LazyImage
+                          src={post.image_url}
+                          alt={post.title}
+                          className="w-full h-20 object-cover rounded mt-2"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        ))
-      )}
+        )}
 
-      <div
-        style={{
-          marginTop: "3rem",
-          padding: "2rem",
-          borderTop: "2px solid #002244",
-          textAlign: "center",
-          backgroundColor: "#f8f9fa",
-          borderRadius: "8px"
-        }}
-      >
-        <h2 style={{ color: "#002244", marginBottom: "1rem" }}>Stay Updated</h2>
-        <p style={{ color: "#666", marginBottom: "1.5rem" }}>
-          Never miss important school announcements and events.
-        </p>
-        <div style={{ display: "inline-flex", gap: "0.5rem" }}>
-          <input 
-            type="email" 
-            placeholder="Enter your email"
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              minWidth: "250px"
-            }}
-          />
-          <button
-            style={{
-              padding: "0.75rem 1.5rem",
-              backgroundColor: "#002244",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer"
-            }}
-          >
-            Subscribe
-          </button>
+        {/* ✅ MOBILE VIEW - With lazy loading optimization */}
+        <div className="lg:hidden space-y-6">
+          {mobilePosts.map((post) => (
+            <div
+              key={post.id}
+              className="w-full bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-200 p-4 md:p-6 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="relative mb-4">
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mb-2"></div>
+                <h2 className="text-blue-800 text-lg md:text-xl font-bold text-center px-4">
+                  {post.title}
+                </h2>
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mt-2"></div>
+              </div>
+              
+              <div className="relative mb-6">
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mb-2"></div>
+                <p className="text-sm text-blue-600 font-semibold text-center">
+                  📅 {formatDate(post.created_at)}
+                </p>
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mt-2"></div>
+              </div>
+              
+              {post.image_url && (
+                <div className="flex justify-center mb-6">
+                  <div 
+                    className="cursor-pointer transition-transform hover:scale-105 duration-200 w-full max-w-full"
+                    onClick={() => openImageModal(post.image_url!, post.title)}
+                  >
+                    {/* ✅ UPDATED: Using LazyImage for mobile images */}
+                    <LazyImage
+                      src={post.image_url}
+                      alt={post.title}
+                      className="w-full max-w-full rounded-lg object-contain mx-auto"
+                      maxHeight="300px"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <div className="text-gray-800 leading-relaxed">
+                {formatContent(post.content, expandedPosts[post.id], post.id)}
+                
+                {post.content.length > 150 && (
+                  <div className="mt-4 flex flex-col items-center">
+                    {expandedPosts[post.id] && (
+                      <div className="mb-3 text-center">
+                        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mb-2"></div>
+                        <p className="text-sm text-blue-600 font-medium">
+                          📅 Published on: {formatDate(post.created_at)}
+                        </p>
+                        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mt-2"></div>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => toggleExpand(post.id)}
+                      className="text-blue-700 font-bold px-4 py-2 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors focus:outline-none border border-blue-300"
+                    >
+                      {expandedPosts[post.id] ? "Show Less" : "Read More"}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+          
+          {/* ✅ NEW: Load More Button for Mobile */}
+          {visiblePosts < newsPosts.length && (
+            <div className="text-center">
+              <button
+                onClick={() => setVisiblePosts(prev => prev + 3)}
+                className="text-blue-700 font-bold px-6 py-3 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors border border-blue-300"
+              >
+                Load More News ({newsPosts.length - visiblePosts} remaining)
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Newsletter Section - UNCHANGED */}
+        <div className="mt-12 p-6 md:p-8 border-t-2 border-blue-300 text-center bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-lg">
+          <h2 className="text-blue-800 mb-4 text-lg md:text-xl font-bold">Stay Updated</h2>
+          <p className="text-blue-700 mb-6">
+            Never miss important school announcements and events.
+          </p>
+
+          <div className="max-w-md mx-auto">
+            <div id="success-message" className="hidden mb-4 p-4 bg-green-100 border border-green-300 text-green-700 rounded-lg">
+              <div className="font-bold">✅ Successfully Subscribed!</div>
+              <div className="text-sm mt-1">You'll receive our latest news updates.</div>
+            </div>
+
+            <div id="error-message" className="hidden mb-4 p-4 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+              <div className="font-bold">❌ Invalid Email</div>
+              <div className="text-sm mt-1">Please enter a valid email address.</div>
+            </div>
+
+            <form 
+              action="https://gmail.us14.list-manage.com/subscribe/post?u=ba886cf9d760e7b8176daeab6&amp;id=f173b72ef4&amp;f_id=00d9b4e5f0" 
+              method="post" 
+              id="mc-embedded-subscribe-form" 
+              name="mc-embedded-subscribe-form" 
+              target="hidden-iframe"
+              className="validate"
+              onSubmit={(e) => {
+                const emailInput = e.currentTarget.EMAIL as HTMLInputElement;
+                const email = emailInput.value.trim();
+                
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                
+                if (!emailRegex.test(email)) {
+                  e.preventDefault();
+                  document.getElementById('success-message')?.classList.add('hidden');
+                  document.getElementById('error-message')?.classList.remove('hidden');
+                  emailInput.focus();
+                } else {
+                  document.getElementById('error-message')?.classList.add('hidden');
+                }
+              }}
+            >
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input 
+                  type="email" 
+                  name="EMAIL" 
+                  className="required email w-full px-4 py-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                  id="mce-EMAIL" 
+                  required 
+                  placeholder="Enter your email" 
+                  onChange={() => {
+                    document.getElementById('error-message')?.classList.add('hidden');
+                  }}
+                />
+                <input 
+                  type="submit" 
+                  name="subscribe" 
+                  id="mc-embedded-subscribe" 
+                  className="button w-full sm:w-auto px-6 py-3 bg-blue-700 text-white border-none rounded-lg cursor-pointer hover:bg-blue-800 transition-colors font-semibold" 
+                  value="Subscribe" 
+                />
+              </div>
+              
+              <div style={{position: 'absolute', left: '-5000px'}} aria-hidden="true">
+                <input type="text" name="b_ba886cf9d760e7b8176daeab6_f173b72ef4" tabIndex={-1} defaultValue="" />
+              </div>
+            </form>
+
+            <iframe 
+              name="hidden-iframe" 
+              id="hidden-iframe" 
+              style={{display: 'none'}}
+              onLoad={() => {
+                document.getElementById('success-message')?.classList.remove('hidden');
+                document.getElementById('error-message')?.classList.add('hidden');
+                const form = document.getElementById('mc-embedded-subscribe-form') as HTMLFormElement;
+                if (form) form.reset();
+              }}
+            ></iframe>
+          </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-0"
+          onClick={closeImageModal}
+        >
+          <button
+            className="absolute top-4 right-4 text-white bg-red-600 hover:bg-red-700 text-2xl transition-colors z-50 rounded-full w-12 h-12 flex items-center justify-center font-bold shadow-lg"
+            onClick={closeImageModal}
+          >
+            ✕
+          </button>
+          
+          <img
+            src={selectedImage}
+            alt={selectedImageTitle}
+            className="max-w-full max-h-full w-auto h-auto object-scale-down cursor-zoom-in"
+            style={{
+              WebkitUserSelect: 'none',
+              userSelect: 'none'
+            }}
+          />
+          
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-80 text-white px-6 py-3 rounded-lg text-center max-w-90vw">
+            <p className="text-lg font-bold whitespace-nowrap overflow-hidden text-ellipsis max-w-xs">
+              {selectedImageTitle}
+            </p>
+          </div>
+          
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm">
+            <p>Click anywhere to close • Pinch to zoom</p>
+          </div>
+        </div>
+      )}
+
+      <style jsx global>{`
+        .news-content {
+          width: 100% !important;
+          max-width: 100% !important;
+          overflow-wrap: break-word !important;
+          word-wrap: break-word !important;
+          word-break: break-word !important;
+          line-height: 1.7;
+        }
+        .news-content * {
+          max-width: 100% !important;
+          overflow-wrap: break-word !important;
+        }
+        .news-content img,
+        .news-content video,
+        .news-content iframe {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+        .news-content table {
+          width: 100% !important;
+          max-width: 100% !important;
+          display: block;
+          overflow-x: auto;
+        }
+        .news-content pre,
+        .news-content code {
+          white-space: pre-wrap !important;
+          word-wrap: break-word !important;
+          max-width: 100% !important;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      `}</style>
     </div>
+    
   );
+
+
+  
 }

@@ -21,7 +21,7 @@ export default function Navbar() {
               <img src ="/schoollogo.png"/>
             </div>
             <Link href="/" className="flex flex-col">
-              <span className="text-2xl font-bold text-gray-900 hover:text-blue-600 transition">
+              <span className="text-1xl font-bold text-gray-900 hover:text-blue-600 transition">
                 Kalerwe Parent School
               </span>
               <span className="text-sm text-gray-600">
@@ -29,6 +29,7 @@ export default function Navbar() {
               </span>
             </Link>
           </div>
+    
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
@@ -70,12 +71,7 @@ export default function Navbar() {
                 >
                   Programs
                 </Link>
-                <Link
-                  href="/academics/faculty"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                >
-                  Faculty
-                </Link>
+              
                 <Link
                   href="/academics/curriculum"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
@@ -122,12 +118,12 @@ export default function Navbar() {
                 >
                   Photo Gallery
                 </Link>
-                <Link
-                  href="/students/clubs"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                >
-                  Clubs & Sports
-                </Link>
+              <Link
+  href="/students"
+  className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+>
+  Student Life
+</Link>
               </div>
             </div>
 
@@ -243,13 +239,7 @@ export default function Navbar() {
                 >
                   Programs
                 </Link>
-                <Link
-                  href="/faculty"
-                  className="block text-center py-1 underline"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Faculty
-                </Link>
+                
                 <Link
                   href="/curriculum"
                   className="block text-center py-1 underline"
@@ -297,12 +287,12 @@ export default function Navbar() {
                   Photo Gallery
                 </Link>
                 <Link
-                  href="/students/clubs"
-                  className="block text-center py-1 underline"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Clubs & Sports
-                </Link>
+  href="/students"
+  className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+>
+  Student Life
+</Link>
+               
               </div>
             </div>
             {/* Students Dropdown */}
@@ -320,6 +310,13 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Contact
+            </Link>
+                        <Link
+              href="/news"
+              className="w-full text-center border border-white rounded py-2 hover:bg-yellow-700 transition font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              News
             </Link>
             <Link
               href="/staff"

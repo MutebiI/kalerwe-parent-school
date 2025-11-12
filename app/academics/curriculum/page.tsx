@@ -7,7 +7,7 @@ export default function CurriculumPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="relative h-64 w-full">
         <Image
-          src="/images/curriculum.jpg"
+          src="/curriculums.jpg"
           alt="Curriculum"
           fill
           className="object-cover brightness-75"
@@ -18,7 +18,6 @@ export default function CurriculumPage() {
           </h1>
         </div>
       </div>
-
       <div className="max-w-5xl mx-auto p-6 space-y-6">
         <p className="text-gray-700 leading-relaxed">
           Our curriculum is structured in accordance with the National Education
@@ -45,8 +44,9 @@ export default function CurriculumPage() {
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               Enrichment Areas
             </h2>
+            {/* {this ic a comment section page and its ink } */}
             <ul className="list-disc pl-5 text-gray-600 space-y-1">
-              <li>Computer Studies</li>
+              <li>Digital Literacy & Technology awareness</li>
               <li>Physical Education</li>
               <li>Music, Dance & Drama</li>
               <li>Art & Crafts</li>

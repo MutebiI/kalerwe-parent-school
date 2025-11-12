@@ -118,12 +118,7 @@ export default function Navbar() {
                 >
                   Photo Gallery
                 </Link>
-              <Link
-  href="/students"
-  className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
->
-  Student Life
-</Link>
+             
               </div>
             </div>
 
